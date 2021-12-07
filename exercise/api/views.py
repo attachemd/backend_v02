@@ -1,7 +1,7 @@
 from rest_framework import viewsets, generics
 
-from core.models import ExerciseModel
-from exercise.api.serializers import ExerciseSerializer
+from core.models import ExerciseModel, FinishedExerciseModel
+from exercise.api.serializers import ExerciseSerializer, FinishedExerciseSerializer
 
 
 # class ExerciseView(viewsets.ModelViewSet):
@@ -14,3 +14,10 @@ class ExerciseView(
 ):
     queryset = ExerciseModel.objects.all()
     serializer_class = ExerciseSerializer
+
+
+class FinishedExerciseView(
+    generics.ListCreateAPIView
+):
+    queryset = FinishedExerciseModel.objects.all()
+    serializer_class = FinishedExerciseSerializer
