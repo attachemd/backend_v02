@@ -23,11 +23,6 @@ def registration_view(request):
 
         if serializer.is_valid():
             account = serializer.save()
-            print('account: ')
-            print(account)
-            # for key, value in account:
-            #     print(key, ' : ', value)
-            print(type(account))
             data['response'] = "Registration Successful!"
             # data['username'] = account.username
             data['id'] = account.id
