@@ -4,6 +4,20 @@ from django.test import TestCase
 from core import models
 
 
+def sample_user(email='test@test.com', password='testpass'):
+    """Create a sample user"""
+    return get_user_model().objects.create_user(email, password)
+
+
+def sample_exercise():
+    """Create a sample exercise"""
+    return models.ExerciseModel.objects.create(
+        name='exercise name',
+        duration=10,
+        calories=10
+    )
+
+
 class ModelTests(TestCase):
 
     def test_create_user_with_email_successful(self):
@@ -52,9 +66,12 @@ class ModelTests(TestCase):
     def test_finished_exercise_str(self):
         """Test the finished exercise string representation"""
         finished_exercise = models.FinishedExerciseModel.objects.create(
-            name='exercise name',
+            user=sample_user(),
+            name=sample_exercise(),
+            # name='exercise name',
             duration=10,
             calories=10,
             state='cancelled'
         )
-        self.assertEqual(str(finished_exercise), finished_exercise.name)
+        # self.assertEqual(str(finished_exercise), "FinishedExerciseModel")
+        self.assertEqual(str(finished_exercise), str(finished_exercise.name))

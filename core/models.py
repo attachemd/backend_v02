@@ -2,6 +2,8 @@ from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 
+from backend_v02 import settings
+
 
 class UserManager(BaseUserManager):
 
@@ -47,11 +49,24 @@ class ExerciseModel(models.Model):
 
 
 class FinishedExerciseModel(models.Model):
-    name = models.CharField(max_length=30)
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+
+    name = models.ForeignKey(
+        ExerciseModel,
+        on_delete=models.CASCADE,
+        related_name='finished_exercise'
+    )
+
+    # name = models.CharField(max_length=30)
     duration = models.IntegerField(default=5)
     calories = models.IntegerField(default=1)
     date = models.DateTimeField(auto_now_add=True)
     state = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.name
+        # return "FinishedExerciseModel"
+        return str(self.name)

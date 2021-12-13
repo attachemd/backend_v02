@@ -105,7 +105,7 @@ class PrivateUserApiTests(TestCase):
 
     def setUp(self):
         self.user = create_user(
-            email='test@cheno.net',
+            email='test@test.com',
             password='testpass',
             name='fname',
         )

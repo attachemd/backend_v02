@@ -1,11 +1,33 @@
 import random
 
+import faker.providers
 from django.core.management import BaseCommand
 from faker import Faker
 
 from core.models import ExerciseModel, FinishedExerciseModel, User
 
 fakegen = Faker()
+
+EXERCISES = [
+    "Lunges",
+    "Pushups",
+    "Squats",
+    "Standing overhead dumbbell presses",
+    "Dumbbell rows",
+    "Single-leg deadlifts",
+    "Burpees",
+    "Side planks",
+    "Planks",
+    "Glute bridge"
+]
+
+
+class Provider(faker.providers.BaseProvider):
+    def exercise(self):
+        return self.random_element(EXERCISES)
+
+
+fakegen.add_provider(Provider)
 
 
 def create_super_user():
@@ -33,28 +55,34 @@ def populate_user(n=5):
 
 def populate(N=5):
     user = create_super_user()
-    test_exercise = ExerciseModel.objects.get_or_create(
-        name='battache',
-        duration=2,
-        calories=4,
-    )[0]
+    # test_exercise = ExerciseModel.objects.get_or_create(
+    #     name='battache',
+    #     duration=2,
+    #     calories=4,
+    # )[0]
 
-    for _ in range(20):
+    for _ in range(10):
         # create new movie entry
         exercise = ExerciseModel.objects.get_or_create(
-            name=fakegen.company(),
-            duration=random.randint(5, 120),
-            calories=random.randint(1, 140),
+            name=fakegen.unique.exercise(),
+            duration=random.randint(1, 10),
+            calories=random.randint(1, 100),
         )[0]
 
     state_list = ["completed", "cancelled"]
 
     for _ in range(40):
         # create new movie entry
+        exercise_id = random.randint(1, 10)
+        exercise = ExerciseModel.objects.filter(
+            id=exercise_id
+        )[0]
         finishedExercise = FinishedExerciseModel.objects.get_or_create(
-            name=fakegen.company(),
-            duration=random.randint(5, 120),
-            calories=random.randint(1, 140),
+            user=user,
+            name=exercise,
+            # name=fakegen.company(),
+            duration=random.randint(1, 10),
+            calories=random.randint(1, 100),
             state=random.choice(state_list)
         )[0]
 
