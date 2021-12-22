@@ -75,3 +75,11 @@ class ModelTests(TestCase):
         )
         # self.assertEqual(str(finished_exercise), "FinishedExerciseModel")
         self.assertEqual(str(finished_exercise), str(finished_exercise.name))
+
+    def test_full_calendar_str(self):
+        """Test the full calendar string representation"""
+        full_calendar = models.FullCalendarModel.objects.create(
+            title="Event name",
+            start="2021-12-07",
+        )
+        self.assertEqual(str(full_calendar), str(full_calendar.title))

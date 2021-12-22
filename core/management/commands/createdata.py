@@ -4,7 +4,7 @@ import faker.providers
 from django.core.management import BaseCommand
 from faker import Faker
 
-from core.models import ExerciseModel, FinishedExerciseModel, User
+from core.models import ExerciseModel, FinishedExerciseModel, User, FullCalendarModel
 
 fakegen = Faker()
 
@@ -37,6 +37,13 @@ def create_super_user():
     )
     user.save()
     return user
+
+
+def create_full_calendar():
+    full_calendar = FullCalendarModel.objects.get_or_create(
+        title="Event name",
+        start="2021-12-07",
+    )[0]
 
 
 def populate_user(n=5):
@@ -94,4 +101,5 @@ class Command(BaseCommand):
         print('populating script')
         populate_user()
         populate(20)
+        create_full_calendar()
         print('populating complete')

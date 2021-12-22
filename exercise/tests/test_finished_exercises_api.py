@@ -25,21 +25,21 @@ def sample_exercise():
     )
 
 
-class PublicTagsApiTests(TestCase):
-    """Test the publicly available tags API"""
+class PublicFinishedExercisesApiTests(TestCase):
+    """Test the publicly available finished exercises API"""
 
     def setUp(self):
         self.client = APIClient()
 
     def test_login_required(self):
-        """Test that login required for retrieving tags"""
+        """Test that login required for retrieving finished exercises"""
         res = self.client.get(FINISHED_EXERCISES_URL)
 
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
-class PrivateTagsApiTests(TestCase):
-    """Test the authorized user tags API"""
+class PrivateFinishedExercisesApiTests(TestCase):
+    """Test the authorized user finished exercises API"""
 
     def setUp(self):
         self.user = get_user_model().objects.create_user(

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'core',
     'user',
     'exercise',
+    'full_calendar',
 ]
 
 MIDDLEWARE = [
