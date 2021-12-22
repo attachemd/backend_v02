@@ -49,7 +49,6 @@ class ExerciseModel(models.Model):
 
 
 class FinishedExerciseModel(models.Model):
-
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
@@ -70,3 +69,11 @@ class FinishedExerciseModel(models.Model):
     def __str__(self):
         # return "FinishedExerciseModel"
         return str(self.name)
+
+
+class FullCalendarModel(models.Model):
+    title = models.CharField(max_length=30)
+    start = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.title
